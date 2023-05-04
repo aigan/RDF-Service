@@ -1,0 +1,44 @@
+[% TRY %]
+
+[% META title = 'People' %]
+
+[% persons = s.get("${NS_LD}Person/Person").rev_type.list %]
+
+
+<table width="80%" border="1">
+  <tr><th>Namn</th><th>E-post adress</th><th>ICQ nummer</th></tr>
+
+[% FOREACH person = persons %]
+  <tr>
+      <td>
+      
+    [% TRY %]
+      
+      <a href="$me?handler=details&focus=[%- person.uri %]">
+      
+      [% person.fn.li.value %]
+      [% person.ln.li.value %]
+
+	</a>
+	
+    [% CATCH; CLEAR; reset %]
+      Bad value: <pre>$error.info</pre>
+    [% END %]
+               
+	</td>
+	<td>
+		
+[% FOREACH emad = person.email.list %]
+	[% emad.value %]
+	[%- "<BR>\n" UNLESS loop.last %]
+[% END %]
+	</td>
+	<td>
+	[% TRY; person.icq.li.value; CATCH; CLEAR; reset; END %]
+	</td>
+  </tr> 
+[% END %]
+</table>
+[% CATCH %]
+oops!
+[% END %]

@@ -1,0 +1,8 @@
+\bCVS\b
+^MANIFEST\.
+^Makefile$
+^Makefile\.old$
+~$
+^blib/
+^RDF-Service-
+^build_doc.sh$

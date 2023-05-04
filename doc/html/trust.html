@@ -1,0 +1,54 @@
+<!-- $Id: trust.html,v 1.4 2001/01/21 20:58:39 aigan Exp $ -->
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "dtd/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>
+      Wraf: Trust
+    </title>
+  </head>
+  <body> 
+
+    <h1><a href="wraf.html">Wraf</a>: Trust</h1>
+
+    <p>The <a href="versioning.html">versioning</a> system and the
+      <em>trust</em> system are two aspects of the same thing.  To
+      trust or not to trust is just one <a
+      href="views.html">view</a>.</p>
+
+    <p>Usually, we only want trusted data. Other times, we want to see
+      all data and decide for ourself. We could then just get all data
+      and order on trust.  We can also specify a orderd list of
+      prefered sources. (As with the desired language.)  </p>
+
+    <p>The details of inherited trust will be detailed later, building
+      on a system of <a href="inference.html">inferencing</a>.</p>
+
+    <p>For now, we just look at the <a href="agent.html">agent</a>
+      behind a <a href="model.html">model</a> containing a <a
+      href="stating.html" >stating</a>.  We could check it against the
+      list of trusted agents by saying <code>$node->arc( model => {
+      agent => [ $agent1, $agent2, $agent3 ] } )</code>.</p>
+
+    <p>But the default <a href="preference.html">preference</a> will
+      be to only get <a herf="truth.html">true</a> statements, and
+      that will imply that they are trusted and <a href=
+      "versioning.html" >current</a>.  The handling of trust must be
+      efficient even with a large amount of trusted sources.  Let's
+      say we have a third party service saying what models, agents or
+      namespaces we can trust.  This would be done by a <a
+      href="interface.html">interface</a> defining the trust()
+      method/property and could be used by saying <code>$node->arc(
+      trusted => 1 )</code>.  That will call the trusted() method once
+      for every arc of the <a href="node.html" >node</a>.  It's up to
+      the interface implementing the method to do what it have to do
+      to be fast.</p>
+
+    <p>To trust a statement, all implicit <a
+      href="stater.html">staters</a> has to be trusted.</p>
+
+    <p>Not implemented</p>
+
+  </body>
+</html>
+

@@ -1,0 +1,16 @@
+[%
+	META title	= 'Lodging create';
+	nsPerson	= "${NS_LD}Person/";
+%]
+
+<input type="hidden" name="focus" value="[%
+unique("${NS_LD}Person/") | html %]" />
+
+<p>First name: <input name="pred-lit ${nsPerson}first_name" /> </p>
+<p>Last name: <input name="pred-lit ${nsPerson}last_name" /> </p>
+
+
+<input type="hidden" name="pred ${NS_RDF}type" value="${NS_LD}Person/Person"/> </p>
+
+<input type="button" OnClick="javascript:go('main','state')"
+       value="Create person" />

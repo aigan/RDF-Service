@@ -1,0 +1,78 @@
+#  $Id: Service.pod,v 1.1 2001/01/21 20:58:39 aigan Exp $  -*-perl-*-
+
+=head1 NAME
+
+RDF::Service - RDF API with DBI and other backends
+
+=head1 SYNOPSIS
+
+  use RDF::Service;
+
+
+  my $ns   = "http://our.org/namespace/";       # Private namespace
+  my $rdf  = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+  my $rdfs = "http://uxn.nu/rdf/2000-2001/09/19/local-schema#";
+
+  my $s = new RDF::Service( $ns."S1" );  # Start session S1
+
+  # Create a new resource of type Property
+  #
+  my $my_prop = $s->get($ns."name")->set(
+      [ $rdf."Property" ],
+      {
+          $rdfs."domain" => [ $ns."Person" ],
+          $rdfs."range"  => [ $rdfs."Literal" ],
+      } );
+
+  # Get the domain of ns:name, as a scalar
+  #
+  my $domain = $s->get($ns."name")->
+                   arc_obj($rdfs."domain")->
+                   li->uri;
+
+=head1 PUBLIC METHODS
+
+=head2 new($uristr)
+
+Returns a L<RDF::Service::Context> object, representing the session.
+
+If C<$uristr> is not supplied, a URI for the resoruce will be
+generated.
+
+  MODEL  = ls:base_model
+  WMODEL = $self
+
+=head1 AUTHOR
+
+Jonas Liljegren   E<lt>jonas@paranormal.seE<gt>
+
+  http://jonas.liljegren.org/myself/en/
+
+=head1 COPYRIGHT
+
+Copyright (C) 2000-2001 Jonas Liljegren.  All Rights Reserved.
+
+This module is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.
+
+=head1 SUPPORT
+
+Comments and bug reports should go to rdf@uxn.nu.
+
+=head1 CREDITS
+
+Stefan Andersson <stefan@uxn.nu>
+
+=head1 SEE ALSO
+
+=for HTML <a href="../../wraf.html">Wraf</a>
+
+=for HTML <a href="../../context.html">Context objects</a>
+
+=for HTML <a href="../../session.html">Sessions</a>
+
+L<RDF::Service::Resource>
+
+L<RDF::Service::Context>
+
+L<RDF::Service::Interface>

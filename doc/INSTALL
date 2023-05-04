@@ -1,0 +1,201 @@
+$Id: INSTALL,v 1.6 2001/03/28 13:50:00 vots Exp $
+
+This is a try to help with the installation of RDF::Service and the
+demo application.
+
+
+PREREQUISITIES
+
+  - Perl v5.6
+    - module Template v2
+    - module CGI
+    - module FreezeThaw
+    - module DBI
+    - module DBD::Pg
+    - module URI
+    - module Time::Object
+
+  - PostgreSQL v7.0
+
+  - Apache v1.3
+    - module mod_usertrack
+
+
+In theory, all of this can work on any operatin system and with any
+SQL database and any web server.  But RDF::Service has only been
+developd and tested under Debian GNU/Linux.  This installation help
+assumes you are using Linux.
+
+
+
+ Install Perl v5.6
+ -----------------
+
+Find out which version of Perl you have by enter the command:
+
+    perl -v
+
+You should absolutely have a complete install of at least Perl version
+5.005_03.  I'm not sure, but I think that it's mainly the "use base"
+construct that needs v5.6 to function correctly.  "use constant" may
+also depend on v5.6.  You can survive without 5.6 if you change those
+details in the source.  You may also find some success in updating
+selected parts to implement the needed functionality.
+
+But if you wan't to try RDF::Service, you are living on the cutting
+edge and should install the latest version of Perl.
+
+You can find deb and rpm packages for 5.6.x (do not use 5.7.x) from
+your usual source.  You can also compile from source:
+
+    http://www.perl.com/pub/language/info/software.html
+
+
+
+ Install PostgreSQL v7.0
+ -----------------------
+
+Find out your version of PostgreSQL by the command:
+
+    psql -V
+
+You need a SQL database in order to use the
+RDF::Service::Interface::DBI::V01 module.  Any SQL database could do,
+as long as they support the SQL statements used.  The module uses
+SEQUENCE, a part of the SQL standard not (yet) supported by MySQL.
+You could use an earlier version of PostgreSQL.  But things has
+changed in v7.0.  The installation instructions will not work for
+earlier versions.
+
+The installation process for PostgreSQL is rather long.  The default
+installation lets anyone logged in to the machine to access all
+databases.  You will have to change the configuration if you want real
+password protection.
+
+The database used by bin/serv1.pl (in the demo) is called
+'wraf_v01a'.  The user is 'wwwdata'.  No password protection is used.
+
+This is a step by step instruction on how to create the user and
+database:
+
+    $ psql -U postgres
+    template1=# create user wwwdata with password 'secret';
+    template1=# create database wraf_v01a;
+    template1=# \q
+
+
+And now initialize the database with the tables in doc/rdf.sql :
+
+    $ psql -U wwwdata wraf_v01a < doc/rdf.sql
+
+
+
+ Install Perl modules
+ --------------------
+
+The best way to install the perl modules is to get the deb or rpm
+packages.  This is especially true from DBI and DBD::Pg, since those
+modules requires a C compiler and special libraries.
+
+But all modules can't be found as packages.  All the modules you need
+can be found at CPAN:
+
+    http://www.cpan.org/
+
+
+You can install modules from CPAN using a perl module that comes with
+the Perl distribution.  Enter interactive mode by typing:
+
+    perl -MCPAN -e shell
+
+The first time you do this, you will be asked a lot of questions and
+asked to install a large amount of packages.  Sometimes, one or more
+of these packages are broken and you will have to hack your way
+through the installation.  But then it's all done, it will be very
+easy to install new perl modules, including new versions of
+RDF::Service.
+
+Inside the CPAN shell, you can write:
+
+Tell me what version of the CGI module I have installed on what
+version is availible in CPAN:
+  cpan> m CGI
+
+Install the latest version of CGI:
+  cpan> install CGI
+
+If something goes wrong.  Do a manual install, by reading the README
+file in the installation directory.  You enter into the directory by
+typing:
+  cpan> look CGI
+
+
+
+ * DBI and DBD::Pg
+
+The DBI is the Perl DataBase Interface.  It uses DBD-modules to
+interface with the databases you use.  DBD::Pg is for Postgres.  Other
+databases has other DBD modules.  For their compilation, you need the
+development client libraries for PostgreSQL.  They are only needed if
+you are going to use the RDF::Service DBI interface.
+
+ * URI
+
+This one is used by the RDF::Service Base interface (ie;
+RDF::Service::Interface::Base::V01) and can't be left out.
+
+ * CGI, FreezeThaw
+
+These three modules are not required by RDF::Service, but are used by
+the demo application.  Requests are:
+
+ 1. collected by the cgi-bin/client.cgi using CGI
+
+ 2. packed to a string using FreezeThaw freeze()
+
+ 3. Sent to bin/serv1.pl with IO::Socket
+
+ 4. Unpacked in bin/sev1.pl
+
+
+ * Template v2
+
+This module is only used by the demo application.  It is not needed by
+RDF::Service.  The module makes it easy to construct HTML pages.  Take
+a look at the documentation the Template Toolkit:
+
+  http://search.cpan.org/doc/ABW/Template-Toolkit-2.00/lib/Template.pod
+
+
+
+ Install Apache v1.3
+ -------------------
+
+No webserver is needed to use RDF::Service.  But the demo application
+uses a CGI client.
+
+Sessions are handled with cookies with the help of the apache module
+mod_usertrack.  That module comes with the standard distribution but
+is not compiled in/used by default.  If shared modules is used, you
+can uncomment the correct rown in the httpd.conf file:
+
+  LoadModule usertrack_module /usr/lib/apache/1.3/mod_usertrack.so
+
+The module is configured in the cgi-bin directory in the .htaccess
+file.  The client.cgi program should be executable and placed where
+the server allows cgi programs.
+
+
+
+ Install the RDF::Service Demo
+ -----------------------------
+
+I never installes the demo.  It's alpha software.  I simply places the
+source distribution in a place accessable through the HTTP server and
+starts the demo program in the bin directory.
+
+Just cd to the bin directory and run './serv1.pl'.  The server opens a
+socket and waits for something to do.
+
+Use a web browser to enter the cgi-bin directory and GET the demo.html
+page.

@@ -1,0 +1,38 @@
+<!-- $Id: exception.html,v 1.2 2001/01/21 20:58:39 aigan Exp $ -->
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "dtd/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>
+      Wraf: Exceptions
+    </title>
+  </head>
+  <body> 
+
+    <h1><a href="wraf.html">Wraf</a>: Exceptions</h1>
+
+    <p><em>Exceptions</em> are a way to implement the response to
+      unexpected answers in a <a href="session.html">session</a>.</p>
+
+    <p>A <a href="request.html">request</a> comes with an expected
+      type of answer.  Usually the expectations include the number of
+      returned resources in the <a href="selection.html"
+      >selection</a>.</p>  
+
+    <p>An exception can be seen as a request for more information.
+      You could for example request the phone number of a person with
+      a certain name.  The <a href="service.html">service</a> finds
+      two person with the specified name and tells you to choose
+      whictch one you mean by throwing an exception.  The exception
+      will be picked up by one of the calling <a href="context.html"
+      >contexts</a>.  The context can answer by adding the extra
+      information.  If the information can't be found in the context,
+      a response will be <a href="presentation.html">presented</a> for
+      the <a href="agent.html">agent</a>, requesting the additional <a
+      href="criterion.html">criterion</a>.</p>
+
+    <p>Not implemented</p>
+
+  </body>
+</html>
+

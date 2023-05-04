@@ -1,0 +1,48 @@
+[% META title = 'Search objects' %]
+
+[%#
+
+If we go back in the query and change it, the first version remains.
+The new options is not used.
+
+TODO: Create a new query object if we go back
+
+%]
+
+[% query = unique("${NS_LD}Query/") %]
+
+<input type="hidden" name="focus" value="[% query | html %]" />
+
+<input type="hidden"
+       name ="[% "pred ${NS_RDF}type" | html %]"
+       value="[% "${NS_RDFS}Class" | html %]" />
+
+[% typelist = unique("${NS_LD}List/") %]
+
+<input type="hidden"
+       name ="[% "subj_pred $typelist ${NS_RDF}type" | html %]"
+       value="[% "${NS_RDFS}Container" | html %]" />
+
+<input type="hidden"
+       name ="[% "pred ${NS_DAML}unionOf" | html %]"
+       value="[% typelist | html %]" />
+
+
+[% lodging_types = s.get("${NS_LD}Class/Lodging").rev_subClassOf.list %]
+
+<table>
+[% FOREACH lodging_type = lodging_types %]
+  <tr>
+    [% TRY %]
+      <td><input type="checkbox" name="[% "li $typelist" | html %]" 
+                 value="[% lodging_type.uri | html %]" /> </td>
+	<td>[%- lodging_type.label.li.value %] </td>
+    [% CATCH; CLEAR; reset %]
+      <td colspan="2">Bad value: <pre>$error.info</pre>
+    [% END %]
+
+  </tr> 
+[% END %]
+</table>
+
+<input type="button" OnClick="javascript:go('lodging_search_result','query')" value=" Search  ">

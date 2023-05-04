@@ -1,0 +1,31 @@
+[% META title = "Class" %]
+
+[%
+	person = s.get(cgi.param('focus')) 
+%]
+
+<input type="hidden" name="focus" value="[%
+person.uri | html %]" />
+
+[[% person.uri  %]]
+
+<center>
+<table width="80%" border="1">
+
+[% arcs = person.arc.list %]
+
+[% FOREACH arc=arcs %]
+
+<tr>
+<td>
+[% TRY; arc.pred.desig; CATCH; CLEAR; reset; "No desig"; END; %]
+</td>
+<td>
+[% TRY; arc.obj.value; CATCH; CLEAR; reset; "No value"; END; %]
+</td>
+</tr>
+
+[% END %]
+</table>
+</center>
+

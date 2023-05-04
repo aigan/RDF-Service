@@ -1,0 +1,46 @@
+<!-- $Id: interface.html,v 1.5 2001/02/08 12:58:27 aigan Exp $ -->
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "dtd/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>
+      Wraf: Interface
+    </title>
+  </head>
+  <body> 
+
+    <h1><a href="wraf.html">Wraf</a>: Interface</h1>
+
+    <p>Wraf uses interfaces to other sources in order to integrate all
+      data in one enviroment, regardless of storage format.  You can
+      read and update information from configuration files, databases,
+      XML files, LDAP, etc.</p>
+
+   <p>The <a href="service.html">service</a> collects information
+      from diffrent sources through interfaces.  The answer to <a
+      href="request.html">requests</a> depend on which interfaces the
+      <a href="session.html">session</a> has connected to.</p>
+
+    <p>Each combination of connected interfaces is given a unique key
+      called IDS. Every IDS has it's own <a href="caching.html"
+      >cache</a>.  The idea is that it in the common case will be many
+      sessions using the same IDS cache.</p>
+
+    <p>It's one thing to be the owner or home interface of a node, and
+      antoher thing to say something about the node or with the
+      node. If we want to know everything said about a thing, we will
+      have to search all interfaces that could give a part of the
+      answer. But if we only want to know whats said from a limited
+      number or sources, we can restrict the search to the interfaces
+      that handles the models owned by the source we are intrested in.
+    </p>
+
+    <h2>See also</h2>
+
+    <ul>
+      <li><a href="api/RDF/Service/Interface.html">RDF::Service::Interface</a></li>
+    </ul>
+	
+  </body>
+</html>
+

@@ -1,0 +1,301 @@
+#  $Id: Context.pod,v 1.1 2001/01/21 20:58:39 aigan Exp $  -*-perl-*-
+
+=head1 NAME
+
+RDF::Service::Context
+
+=head1 PUBLIC METHODS
+
+These are the methods applicable for all resources.
+
+If nothing else is said, the return value is an context object.
+
+Unless otherwise stated, the parameters for the methods are
+resources.  A resource is either given by its uri string or a context
+object holding the resource.
+
+Some methods I<initialize> the object before it's main action.  To
+initialize the object is to ask all the connected interfaces for
+relevant statings.  There is presently two types of initializations;
+that of the type statements, and that of the other properties.  The
+keyword B<known> is used to indicate that no initialization is done.
+
+C<$self> referes to the object those method is invoked.
+
+=head2 name()
+
+Returns C<< $self->[NODE][NAME] >>
+
+=head2 uri()
+
+Returns C<< $self->[NODE][URISTR] >>
+
+=head2 model()
+
+Returns the model
+
+=head2 get( $uristr, $ids )
+
+Calls C<< get_context_by_id( $id, $ids >>
+
+=head2 get_context_by_id( $id, $ids )
+
+C<$ids> is optional and should only be used by
+L<RDF::Service::Interface::Base::V01/connect>.
+
+Gets the node from the cache or creates a new node.
+
+Returns the context.
+
+=head2 get_node( $uristr, $ids )
+
+Calls C<< get_node_by_id( $id, $ids ) >>
+
+=head2  get_node_by_id( $id, $ids )
+
+C<$ids> is optional and should only be used by
+L<RDF::Service::Interface::Base::V01/connect>.
+
+Gets the node from the cache or creates a new node.
+
+Returns the node.
+
+=head2 get_model( $uristr )
+
+Creates the model if it doesn't already exist.
+
+Returns the model
+
+=head2 is_a( $class )
+
+Returns I<true> if C<$self rdf:type $class>.  Initialize the types if
+needed.
+
+=head2 could_be_a( $class )
+
+Returns I<true> if C<$self rdf:type $class> or if we currently doesn't
+B<know> all the types of $self.
+
+=head2 is_known_as_a( $class )
+
+Returns I<true> if we B<know> that C<$self rdf:type $class>.
+
+=head2 exist_pred( $pred )
+
+Returns I<true> if $self is B<known> to have a $pred property.
+
+=head2 type_orderd_list()
+
+Returns a reference to a list of the B<known> types of $self.
+
+The types is orderd by L<RDF::Service::Interface::Base::V01/level>.
+
+=head2 type()
+
+Returns a selection of the orderd types.
+
+=head2 rev_type()
+
+Same as type, but in the reverse direction.
+
+=head2 arc( $point )
+
+Returns a selection of the arcs having $self as subject.  If $point is
+defined, it should be a property, defining which statements to return.
+
+=head2 arc_subj( $point )
+
+Returns a selection of the subjects from arcs having $self as object
+and $point as predicate.
+
+=head2 arc_pred()
+
+Returns a selection of th predictes from arcs having $self as subject.
+
+=head2 arc_obj( $point )
+
+Returns a selection of the objects from arcs having $self as subject
+and $point as predicate.
+
+=head2 arc_obj_list( $point )
+
+Same as arc_obj() but returns a reference to a list.
+
+=head2 set( $types, $props )
+
+Calls C<set_types( $types, 1 )> and C<set_props( $props, 1)>.
+
+=head2 set_types( $types, $trim, $local_changes )
+
+Sets the types of $self to $types, which is a list of types.
+
+If C<$trim>, existing types for $self, not mentioned in
+$types will be removed, providing the model is the same.
+
+If C<$local_changes>, the changes will not be forwarded to the
+interfaces.  This parameter is intended for internal use.
+
+=head2 set_props( $props, $trim, $local_changes )
+
+The same as set_types(), but for C<$props>.
+
+  $props =
+    {
+      $pred_uri => [ $obj, ... ],
+      ...
+    };
+
+C<$obj> can be a uri string, context object or a C<SCALAR REF>, in
+which case it will be takes as a literal.
+
+=head2 create_literal( $uristr, $lit_str_ref )
+
+Creates a literal with uri $uristr, or a generated uri, if undef.  The
+content is taken from the scalar ref $lit_str_ref.  Returns the
+lietaral (as a context object).
+
+=head2 set_literal( $lit_str_ref )
+
+Changes the value uf the literal $self to the content of $lit_str_ref
+scalar reference.
+
+=head2 types_as_string()
+
+Returns a string for debugging purposes, listing the types of $self,
+and the models that defines them.  Example:
+
+  Types for http://uxn.nu/rdf/2000/09/19/local-data/service/jonas.rit.se.1800979912294474
+  t http://uxn.nu/rdf/2000/09/19/local-schema#Model
+    m http://uxn.nu/rdf/2000/09/19/local-data#The_Base_Model  SOLID 1
+  t http://www.w3.org/2000/01/rdf-schema#Container
+    m http://uxn.nu/rdf/2000/09/19/local-data#The_Base_Model  SOLID 1
+  t http://uxn.nu/rdf/2000/09/19/local-schema#Service
+    m http://uxn.nu/rdf/2000/09/19/local-data#The_Base_Model  SOLID 1
+    m http://uxn.nu/rdf/2000/09/19/local-data/service/jonas.rit.se.1800979912294474  SOLID 0
+  t http://www.w3.org/2000/01/rdf-schema#Resource
+    m http://www.w3.org/2000/01/rdf-schema#  SOLID 1
+
+=head2 li()
+
+Returns the only resource from a container (for example a selection).
+Dies if more or less than one items exist in the container.
+
+=head2 list()
+
+Returns a reference to the list of resources in the container $self.
+
+
+
+=head1 INTERFACE METHODS
+
+=head2 init_types()
+
+Calls the interfaces init_types() and sets TYPE_ALL.
+
+=head2 init_rev_types()
+
+Calls the interfaces init_rev_types() and sets REV_TYPE_ALL.
+
+=head2 init_rev_subjs()
+
+Calls the interfaces init_rev_subjs and sets REV_SUBJ_ALL.
+
+=head2 init_rev_objs()
+
+Calls the interfaces init_rev_objs() and sets REV_OBJ_ALL.
+
+=head2 store_types( @args )
+
+Initializes the types and calls the interfaces store_types().  Sets
+TYPE_ALL to 2 if all goes well.
+
+=head2 store_props( @args )
+
+Initialize REV_SUBJ and calls the interfaces store_props().  Sets
+REV_SUBJ_ALL to 2 if all foes well.
+
+=head2 store
+
+Store $self in the interfaces.  Also store all unsaved nodes realted
+to $self.
+
+
+=head2 declare_del_types( $types )
+
+Delete types from $self.
+
+=head2 declare_del_rev_types( $res )
+
+Delete rev_types from $self.
+
+=head2 declare_literal( $lit_str_ref, $lit )
+
+Makes a literal out of $lit (uristr or resource or undef) and sets the
+value to $lit_str_ref.
+
+=head2 declare_selection( $content, $selection )
+
+Creates and returns the selection resource $selection with the content
+$content.  The content is a reference to a list of (context)
+resources.
+
+=head2 declare_self( $types, $props)
+
+Calls C<set_types8 $types, 0, 1 )> and C<set_props( $props, 0, 1 )>.
+
+=head2 declare_add_types( $types, $model, $solid )
+
+Adds the $types to $self.  
+
+Use WMODEL unless $model.  $model should be a node object.
+
+If $solid is true, do not try to save the added types in the
+interfaces.  (They are infered or temporary.)
+
+Additional types will be infered based on c<RDFS:subClassOf>.
+
+
+=head2 declare_add_dynamic_literal( $pred, $lit_str_ref, $lit_uristr,
+$arc_uristr, $model )
+
+Add a stating in model $model or WMODEL with $self as subject, $pred
+as predicate and $lit_uristr as object.  The literal is set to
+$lit_str_ref and the arc is the resource $arc_uristr.
+
+
+=head2 declare_add_prop( $pred, $objm $arc_uristr, $model, $solid )
+
+Calls C<declare_arc()>.
+
+=head2 declare_arc( $pred, $subj, $obj, $uristr, $model, $solid )
+
+Declare the statement in model $model or WMODEL.  If $solid, do not
+try to stor the arc in the interfaces.
+
+
+=head1 AUTHOR
+
+Jonas Liljegren   E<lt>jonas@paranormal.seE<gt>
+
+  http://jonas.liljegren.org/myself/en/
+
+=head1 COPYRIGHT
+
+Copyright (C) 2000-2001 Jonas Liljegren.  All Rights Reserved.
+
+This module is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.
+
+=head1 SUPPORT
+
+Comments and bug reports should go to rdf@uxn.nu.
+
+=head1 CREDITS
+
+Stefan Andersson <stefan@uxn.nu>
+
+=head1 SEE ALSO
+
+=for HTML <a href="../../../wraf.html">Wraf</a>
+
+L<RDF::Service>

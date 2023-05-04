@@ -1,0 +1,20 @@
+
+<input type=hidden name=handler value="$template.next_handler">
+<input type=hidden name=previous value="$handler">
+<input type=hidden name=action value="">
+</form>
+
+[% trows = dlines() %]
+[% rows = 4 + trows - offset %]
+
+<p><a href="javascript:go('person_add_form')">Add Person</a>
+ | <a href="javascript:go('person_list')">List persons</a>
+ | <a href="javascript:go('person_search_form')">Search persons</a>
+ | <a href="javascript:go('person_list','initiate_db')">Initiate DB</a>
+ | <a href="tail.cgi?$rows" target="log">View log</a>
+ | <a href="tail.cgi?$trows" target="log">View complete log</a>
+</p>
+
+<p><em>Session [% s.uri %]</em></p>
+
+</body></html>

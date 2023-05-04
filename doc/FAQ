@@ -1,0 +1,23 @@
+$Id: FAQ,v 1.2 2001/02/02 09:09:21 aigan Exp $
+
+These are actually not a FAQ, but a NVFABVGQ - Not Very Frequently
+Asked But Very Good Questions.
+
+
+Q: Why should I use this?
+
+A: There are a couple of other frameworks out there.  But I think Wraf
+   is unique in how it does things.  It fully uses the flexibility of
+   Perl.  The concepts takes RDF to another level, even beyond the
+   Semantic Web.
+
+   Present features includes the ability to work with mutlipple models
+   and even multipple RDF sources at the same time.  Future features
+   will include a type of logic system that just bypass the
+   traditional complexities of inferencing.
+
+
+Q: How do I parse RDF/XML files?
+
+A: You don't.  That interface plugin has not been written yet.  The
+   demo application adds RDF data via the HTML interface.

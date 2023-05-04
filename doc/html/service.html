@@ -1,0 +1,56 @@
+<!-- $Id: service.html,v 1.2 2001/01/07 23:53:16 aigan Exp $ -->
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "dtd/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>
+      Wraf: Service
+    </title>
+  </head>
+  <body> 
+
+    <h1><a href="wraf.html">Wraf</a>: Service</h1>
+
+    <p>A <em>service</em> is an internet resource used to retrieve
+      information.</p>
+
+    <p>Every <a href="session.html">session</a> is called a service.
+      The service represnts an <a href="agent.html">agents</a> view of
+      a thing which to direct <a href="request.html">requests</a>.</p>
+
+    <p>Differ between:</p>
+
+    <ol>
+
+      <li>The service program (ie, Wraf)</li>
+
+      <li>The release of the program (v1.0)</li>
+
+      <li>The installation of the program (on host.domain)</li>
+
+      <li>The daemon (listening on a port)</li>
+
+      <li>The process (<em>serving as the daemon</em>)</li>
+
+      <li>The session</li>
+
+      <li>The request</li>
+
+      <li>And all these things for the <a href="client.html"
+        >client</a></li>
+
+    </ol>
+
+    <p>Each of these can be represented by its own resource.  The two
+      most significant resources here is the client URL and the
+      session.  The service will normally be accessd via a client that
+      gives it a HTTP interface.  HTTP requests to the client is
+      forwarded to the daemon URL.</p>
+
+    <p>The service collects information from diffrent sources through
+      <a href="interface.html">interfaces</a>.</p>
+
+  </body>
+</html>
+
+

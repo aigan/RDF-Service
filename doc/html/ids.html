@@ -1,0 +1,48 @@
+<!-- $Id: ids.html,v 1.1 2001/01/21 20:58:39 aigan Exp $ -->
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "dtd/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>
+      Wraf: IDS
+    </title>
+  </head>
+  <body>
+
+    <h1><a href="wraf.html">Wraf</a>: IDS</h1>
+
+    <p><em>IDS</em> stands for <em><strong>I</strong>nterface
+	<strong>D</strong>omain <strong>S</strong>ignature</em>.</p>
+
+    <p>Every <a href="session.html">session</a> connects to one or
+      more <a href="interface.html">interfaces</a>.  Those interfaces
+      defines the known universe.
+
+    <p>The <a href="node.html">node</a> holding the session resource
+      will hold a orderd list of connected <a href= "interface.html"
+      >interfaces</a>.  The signature, called <em>IDS</em> will be
+      generated from this order.</p>
+
+    <p>Every node will be marked with a IDS.  The node will be <a
+      href="caching.html">cached</a> and can be used again if a node
+      with the same signature is fetching the same resource.</p>
+
+    <p>This means that all the node methods is only dependent on the
+      order of the connected interfaces.  This also means that for
+      each resource there can be one node for each IDS.  They are the
+      same resource, but viewed within diffrent universes, they appear
+      diffrent in regard to the result of queries, etc.</p>
+
+    <p>This construction is based on the asumption that there will be
+      many <a href="agent.html">agents</a> using the same
+      signature. That is: the same node will be reused more times than
+      not.</p>
+
+    <p>The objects signature is a read only value.</p>
+
+    <p>Presently, the individual session and base_model resources is
+      morphed to the new IDS upon connection to a new interface.  This
+      should probably change.</p>
+
+  </body>
+</html>

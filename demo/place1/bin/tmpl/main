@@ -1,0 +1,18 @@
+[% META title = 'Places' %]
+
+[% lodgings = s.get("${NS_LD}Class/Lodging").rev_subClassOf.list %]
+
+<table>
+[% FOREACH lodging = lodgings %]
+  <tr>
+    [% TRY %]
+      <td><a href="$me?handler=lodging_type&focus=
+            [%- lodging.uri | uri %]">
+            [%- lodging.label.li.value %]</a>
+    [% CATCH; CLEAR; reset %]
+      <td colspan="2">Bad value: <pre>$error.info</pre>
+    [% END %]
+
+  </tr> 
+[% END %]
+</table>

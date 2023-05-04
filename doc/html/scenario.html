@@ -1,0 +1,47 @@
+<!-- $Id: scenario.html,v 1.3 2001/01/21 20:58:39 aigan Exp $ -->
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "dtd/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>
+      Wraf: Scenarios
+    </title>
+  </head>
+  <body> 
+
+    <h1><a href="wraf.html">Wraf</a>: Scenarios</h1>
+
+    <p>Wraf uses <a href="caching.html">caching</a> in order to speed
+      up the system.  The second time Wraf gets the same <a href=
+      "request.html" >request</a>, it will use the cached answer.</p>
+
+    <p>In order to find the answer, Wraf may have to retrieve data
+      from other <a href="service.html">services</a> on the internet,
+      and make many searches and <a href="inference.html"
+      >inferences</a>.  This can take a long time.</p>
+
+    <p><em>Scenarios</em> can be used to find the answers to a
+      question before anyone has asked it.  This will lead to the
+      answers being cached before the first request, making the system
+      respond faster.</p>
+
+    <p>Free time and resources will be used for developing those
+      scenarios.  The scenarios will be choosen on a) how likely they
+      are, b) how time consuming they are, and c) how important
+      they are.</p>
+
+    <p>As an example; if the system know you have an intrest in Perl,
+    it can spend its free time searching the web for news about Perl.
+    The next time you ask about Perl news, it will have a presentation
+    ready for you.</p>
+
+    <p>Since everyone is free to state anything, Wraf can have a
+      scenario there it states things that it know is not true but
+      want to explore.  It just set up the scenario to trust
+      hypothetical statings and pursue the questions.</p>
+
+    <p>Not implemented</p>
+
+  </body>
+</html>
+

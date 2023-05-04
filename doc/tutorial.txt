@@ -1,0 +1,99 @@
+#  $Id: tutorial.txt,v 1.4 2001/03/28 11:53:11 vots Exp $  -*-perl-*-
+
+# This file is created to be an example of the existing functions
+
+
+
+# The RDF::Service library requires perl v5.6
+#
+use 5.006;
+
+# Set the path to the library
+#
+use FindBin; use lib "$FindBin::Bin/../lib";
+
+# Load the library
+#
+use RDF::Service;
+
+# Import namespace constants
+#
+use RDF::Service::Constants qw( :namespace );
+
+# Choose a private namespace you own
+#
+use constant NS => "http://our.org/namespace";
+
+
+# Create the session object.
+#
+# Our $s is a resouce object representing our *connection* to the
+# RDF::Service server.  That's why it is called a session resource.
+# The parameter to the constructor holds our session URI.
+#
+our $s = new RDF::Service( NS."/S1" );
+
+
+# We will now connect to a database, used to store our localy created
+# statements.
+#
+our $db = $s->connect("RDF::Service::Interface::DBI::V01",
+		    {
+			connect  => "dbi:Pg:dbname=wraf_v01a",
+			name     => "wwwdata",
+			password => "secret",
+		    });
+
+
+# And now create a model in which our statements will be placed.
+#
+my $model = $s->get_model(NS."/M1");
+
+
+# Define a new class.  $c_person stands for "the class named Person".
+# get() retrieves/creates the resource. The set() sets the resource
+# to the type RDFS:Class.
+#
+my $c_person = $model->get(NS."/Person")->set([NS_RDFS,'Class']);
+
+
+# Create a resource of type Person, with a first and last name.  The
+# empty get() generates a unique URI.
+#
+my $jonas = $model->get()->set( [$c_person],
+	     {
+		 NS.'/first_name' => [\"Jonas"],
+		 NS.'/last_name'  => [\"Liljegren"],
+	     }
+	    );
+
+
+# Get a list of all resources of type Person.
+#
+my @persons = $c_person->rev_type->list;
+
+
+# Get the first name of the first person
+#
+my $first_name = $persons[0]->arc_obj(NS.'/first_name')->li;
+
+# Get a reference to the literal value of the resource
+#
+my $first_name_str = $first_name->value;
+
+# Append a dollar sign to print the string pointed to by the reference
+#
+print $$first_name_str;
+
+
+# Change the name of the person
+#
+$first_name->set_literal(\ "James");
+
+
+# Remove the person (recurseivly).
+#
+$person[0]->delete;
+
+
+# That's a start.  Happy hacking!

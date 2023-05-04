@@ -1,0 +1,20 @@
+[% PROCESS components %]
+<HTML><HEAD><TITLE>Wraf: $template.title</TITLE>
+[% INCLUDE js %]
+</HEAD><BODY>
+
+<h1>Wraf $VERSION: $template.title</h1>
+
+[% view_result %]
+
+[% TRY %]
+[% agent = s.agent.li %]
+<p>You are now operating as
+    [% agent.fn.li.value %]
+    [% agent.ln.li.value %]
+</p>
+[% CATCH; CLEAR; reset %]
+<p>Not logged in: <pre>$error.info</pre></p>
+[% END %]
+
+<form name="f" action="$me" method="post">

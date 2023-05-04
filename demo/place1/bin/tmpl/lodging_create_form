@@ -1,0 +1,28 @@
+[% META title = 'Lodging create' %]
+
+<input type="hidden" name="focus" value="[%
+unique("${NS_LD}Lodging/") | html %]" />
+
+
+<p>Name: <input name="pred-lit ${NS_RDFS}label" /> </p>
+
+
+[% lodgings = s.get("${NS_LD}Class/Lodging").rev_subClassOf.list %]
+
+<table>
+[% FOREACH lodging = lodgings %]
+  <tr>
+    [% TRY %]
+      <td><input type="checkbox" name="[% "pred ${NS_RDF}type" | html %]" 
+                 value="[% lodging.uri | html %]" />
+          [% lodging.label.li.value | html %] </td>
+    [% CATCH; CLEAR; reset %]
+      <td colspan="1">Bad value: <pre>$error.info</pre> </td>
+    [% END %]
+
+  </tr> 
+[% END %]
+</table>
+
+<input type="button" OnClick="javascript:go('main','state')"
+       value="Create lodging object" />

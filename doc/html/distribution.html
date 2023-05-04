@@ -1,0 +1,44 @@
+<!-- $Id: distribution.html,v 1.2 2001/01/21 20:58:39 aigan Exp $ -->
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "dtd/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>
+      Wraf: Distributed properites
+    </title>
+  </head>
+  <body> 
+
+    <h1><a href="wraf.html">Wraf</a>: Distributed properties</h1>
+
+    <p>A <em>distributed property</em> is a property that applies to
+      many resources, but are stored internally as one <a href=
+      "stating.html">stating</a>.</p>
+
+    <p>A property can be distributed over a <a href=
+      "container.html">container</a> (including <a href=
+      "model.html">models</a>, <a href="interface.html">interfaces</a>
+      and <a href="selection.html">selections</a>), a <a href=
+      "namespace.html" >namespace</a>, or all resources of a specific
+      type.</p>
+
+    <p>A property can also be inversly distributed, in such a way that
+      a resource gains all the properties that a group of resources
+      has.  For example, a resource could have the aggregated
+      properties of all the resources in a container.</p>
+
+    <p>The existence of this distribution functionality was forced by
+      the <code>aboutEachPrefix</code> syntax, and has been
+      generalized to be as useful as possible.</p>  
+
+    <p>A distributed property will act exactly as normal properties.
+      But the statings will have implicit properties explaining the
+      situation.  The diffrent types of distributions will also be
+      modelled in a way that allowes the data to be exported in the
+      compact, non-expanded version.</p>
+
+    <p>Not implemented</p>
+
+  </body>
+</html>
+

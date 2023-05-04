@@ -1,0 +1,40 @@
+[% META title = 'Person search result' %]
+
+[% pc = s.get("${NS_LD}Class#Person") %]
+
+[% persons = pc.rev_type.sel({fn = [lit(cgi.param('r_fn'))]}).list %]
+
+<table>
+[% FOREACH person = persons %]
+  <tr>
+    [% TRY %]
+      <td>[% person.fn.li.value %]
+      <td>[% person.ln.li.value %]
+    [% CATCH; CLEAR; reset %]
+      <td colspan="2">Bad person: <pre>$error.info</pre>
+    [% END %]
+
+    <td><input type="button" 
+               OnClick="f.r_person.value='$person.uri';
+                        go('person_view')"
+               value=" View ">
+    <td><input type="button"
+               OnClick="f.r_person.value='$person.uri';
+                        go('person_edit_form')"
+               value=" Edit ">
+    <td><input type="button"
+               OnClick="f.r_person.value='$person.uri';
+                        go('person_list', 'person_delete')"
+	       value=" Delete ">
+    <td><input type="button"
+               OnClick="f.r_person.value='$person.uri';
+                        go('person_list', 'person_login')"
+	       value=" Become this person ">
+  </tr> 
+[% END %]
+</table>
+
+<input type="hidden" name="r_person">
+
+
+

@@ -1,0 +1,21 @@
+[% META title = 'Objects' %]
+
+[% lodging_type = s.get(cgi.param('focus')) %]
+
+<h2>[% lodging_type.label.li.value | html %]</h2>
+
+<table>
+[% FOREACH object = lodging_type.rev_type.list %]
+  <tr>
+    [% TRY %]
+      <td><a href="$me?handler=lodging_object&focus=
+            [%- object.uri | uri %]">
+            [%- object.label.li.value %]</a>
+    [% CATCH; CLEAR; reset %]
+      <td colspan="2">Bad value: <pre>$error.info</pre>
+    [% END %]
+
+  </tr> 
+[% END %]
+</table>
+

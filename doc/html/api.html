@@ -1,0 +1,187 @@
+<!-- $Id: api.html,v 1.5 2001/02/05 10:08:58 aigan Exp $ -->
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "dtd/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>
+      Wraf: API
+    </title>
+  </head>
+  <body> 
+
+    <h1><a href="wraf.html">Wraf</a>: API</h1>
+
+    <p>See the <a href="../tutorial.txt">tutorial</a> for an
+      introduction on how to use <code>RDF::Service</code> for
+      creating an RDF application.</p>
+
+    <h2>Syntax summary</h2>
+
+    <p>Predicates can be used in the place of <a href=
+      "request.html">request</a> methods.  For a property to be used
+      in this way, they have to be declared as the <a href=
+      "abbrevation.html">abbrevation</a> of their full URI.</p>
+
+    <p>Elements in <code>[]</code> are ORed together and pairs in
+      <code>{}</code> are ANDed together.  The special props <code>and
+      => [...]</code> and <code>or => {}</code> changes that
+      behaviour.  <code>not => [...]</code> and <code>not =>
+      {...}</code> negates the effect of <code>[]</code> and
+      <code>{}</code>.</p>
+
+    <p>The method attributes are called <a href=
+      "criterion.html">criterions</a>, as they decide which resources
+      should be included in the result <a href="selection.html"
+      >selection</a>.</p>
+
+    <p>The API is definately not finalized.  Some of these things
+      doesn't make sense.  This mainly shows the intended style of the
+      API.</p>
+
+
+    <p>Return a <a href="selection.html">selection</a> of all arcs
+      with $node as subj:</p>
+
+    <blockquote><code>$node->arc()</code></blockquote>
+
+
+    <p>Return a selection of all arcs with $node as subj and $pred as
+      pred:</p>
+
+    <blockquote><code>$node->arc($pred)</code></blockquote>
+
+
+    <p>Return a selection of all arcs with $node as subj and one of
+      $pred1, pred2 or $pred3 as pred:</p>
+
+    <blockquote><code>$node->arc([$pred1, $pred2, $pred3])</code></blockquote>
+
+
+
+    <p>Return a selection of all arcs with $node as subj, $pred as
+      pred and that has a property with the key $x and value $y.  All
+      the criterions must be matched. The 'pred' property are used as
+      a short for the RDF:predicate property:</p>
+
+    <blockquote><code>$node->arc({pred => $pred, $x => $y })</code></blockquote>
+
+
+
+    <p>The property $x must have the value of *either* $y or $z:</p>
+
+    <blockquote><code>$node->arc({ $x => [ $y, $z ] })</code></blockquote>
+
+
+
+    <p>I hope that this is much more pover than actualy needed in
+      practical use.  This would be the same as "for each arc that has
+      node as subject, return all arcs for which the following is
+      true; <code>( ( (P(a)==b) OR ( (P(c)==d) AND (P(e)==f) ) ) AND (
+      (P(g)==h) ) )</code>:</p>
+
+    <blockquote><code>$node->arc({and=>[[{$a=>$b},{$c=>$d,$e=>$f}],{$g=>$h}]})</code></blockquote>
+
+
+    <p>Return all arcs that has a property $a those value is a
+      resource that has the property $b with the value $c:</p>
+
+    <blockquote><code>$node->arc({ $a => { $b => $c } })</code></blockquote>
+
+
+
+    <p>The same, but create the selection as the union of the result
+      from each nodes in the parent selection:</p>
+
+    <blockquote><code>$selection->select_arc(...)</code></blockquote>
+
+
+
+    <p>The same, but substitute the subj with the obj:</p>
+
+    <blockquote><code>$selection->select_rev_arc(...)</code></blockquote>
+
+
+
+    <p>Return object (and *not* a selection) (matching the criterions)
+      of an arc:</p>
+
+    <blockquote><code>$arc->obj(...)</code></blockquote>
+
+
+
+    <p>Return all objects of all arcs that has $node as subj:</p>
+
+    <blockquote><code>$node->arc_obj()</code></blockquote>
+
+
+
+    <p>Return all objects that has a reverse arc with $pred as
+      predicate and $node as subj.  That is the same as "all the
+      values of the $node property $pred":
+
+      <blockquote><code>$node->arc_obj( $pred )</code></blockquote>
+
+
+
+    <p>Same as arc_obj, but substitute obj with subj:</p>
+
+    <blockquote><code>$node->arc_subj( $pred )</code></blockquote>
+
+
+
+    <p>Return the only match from a container (or selection), or <a
+      href="exception.html">throw an exception</a>:</p>
+
+    <blockquote><code>$container->li()</code></blockquote>
+
+
+
+    <p>Return element 8 (counting from 1) in the container:</p>
+
+    <blockquote><code>$container->li( 8 )</code></blockquote>
+
+
+
+    <p>Return the only resource from a container matching the
+      citerions, or throw an exception if there was many matches:</p>
+
+    <blockquote><code>$container->li( ... )</code></blockquote>
+
+
+
+    <p>Return a selection of containers (including models and
+      selections) matching the specified criterions and including this
+      $node:</p>
+
+    <blockquote><code>$node->rev_li( ... )</code></blockquote>
+
+
+
+    <p>The same as li() but returns a selection instead of a single
+      resource:</p>
+
+    <blockquote><code>$container->select( ... )</code></blockquote>
+
+
+
+    <p>Return all objects of the arcs that has $node as subj and XXX
+      as pred, matching the specified criterions.  XXX here is any
+      predicate registred as an abbrevation:</p>
+
+    <blockquote><code>$node->XXX( ... )</code></blockquote>
+
+
+
+    <p>The same as XXX() but substitute subj with obj:</p>
+
+    <blockquote><code>$node->rev_XXXX( ... )</code></blockquote>
+
+
+    <p>Most of this is not implemented.  See <a href=
+    "api/RDF/Service/Context.html">RDF::Service::Context</a> and <a
+    href="../tutorial.txt">the tutorial</a> for the currently
+    implemented methods.</p>
+
+  </body>
+</html>
+

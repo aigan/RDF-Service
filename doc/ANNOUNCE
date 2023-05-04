@@ -1,0 +1,19 @@
+RDF::Service 0.0404 from the Wraf project has been released
+
+        http://www.uxn.nu/wraf/
+
+CHANGES
+    * Lots of documentation
+    * some changes and bugfixes
+
+
+DESCRIPTION
+    Wraf implements a RDF Perl API that hopes to realize the Semantic
+    Web. The framework uses RDF for data, user interface, modules and
+    object methods. It uses interfaces to other sources in order to
+    integrate all data in one enviroment, regardless of storage form.
+
+    The homepage for Wraf is http://www.uxn.nu/wraf/ there you can
+    find the developers mailinglist and more background information.
+    Please send any comments to the developer mailinglist.
+

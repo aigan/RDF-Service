@@ -1,0 +1,46 @@
+<!-- $Id: truth.html,v 1.1 2001/01/21 20:58:39 aigan Exp $ -->
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "dtd/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>
+      Wraf: Truth
+    </title>
+  </head>
+  <body> 
+
+    <h1><a href="wraf.html">Wraf</a>: Truth</h1>
+
+    <p><code>ls:Truth</code> is a class.  True statements will be of
+      <code>rdf:type ls:Truth</code></p>
+
+    <p><a href=
+      "http://www.w3.org/DesignIssues/Toolbox.html#Assertion">TBL
+      suggests the property truth</a> for a model.  To get true
+      properties of a node we could say <code>$node->arc( type => 'lc:Truth'
+      )->list</code> or maby, if we doesn't <a href=
+      "distribution.html" >distribute</a> the model truthness,
+      <code>$node->arc( model => {type => 'lc:Truth' } )->list</code>.</p>
+
+    <p>To get the true english name of a thing, we could say
+      <code>$thing->arc( pred => $name, type => 'lc:Truth' )->obj( lang =>
+      $english )->value</code>.  The <a href="preference.html"
+      >preference</a> for true statements will usually be a part of
+      the <a href="context.html" >context</a>.  So we could say
+      <code>$thing->name( lang => $english )->value</code> instead.
+      And with a prespecified preference for english versions (in the
+      context), we could say <code> $thing->name->value</code>.</p>
+
+    <h2>See also</h2>
+
+    <ul>
+
+      <li><a href="view.html">Views</a></li>
+
+    </ul>
+
+    <p>Not implemented</p>
+
+  </body>
+</html>
+

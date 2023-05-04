@@ -1,0 +1,148 @@
+#  $Id: Interface.pod,v 1.1 2001/01/21 20:58:39 aigan Exp $  -*-perl-*-
+
+=head1 NAME
+
+RDF::Service::Interface
+
+=head1 DESCRIPTION
+
+The interfaces has the role of implementing the methods for the
+resources.  They are the connection to the backend; the databases,
+data files, other systems.  They also implement all the special
+logic.  There could be an interface each for:
+
+  - Import/Export RDF/XML files
+
+  - Implement versioning logic
+
+  - Search engines connection
+
+  - Interfaces to other program systems
+
+A session can connect to several interfaces.  The data will be updated
+in real time.  You can connect to an LDAP database.  Search the
+information.  Updates of the information will immediately update the
+backend database.
+
+
+The two existing interfaces are:
+
+L<RDF::Service::Interface::Base::V01>
+
+L<RDF::Service::Interface::DBI::V01>
+
+
+=head1 USING INTERFACES
+
+Depending on wheter you can read and/or write data from the interface,
+they should implement methods for it.
+
+=head2 find_node( $uristr )
+
+Returns the node if it can be found in $self.  Otherwise, return
+undef.
+
+
+
+
+=head1 CONSTRUCTING INTERFACES
+
+All methods are called with the context object and interface object as
+the first and second parameter, followed by the specific parameters.
+
+=head2 register( $args )
+
+Every interface has a C<register()> function that should return a
+datastructure for which method is availible for which resource.  The
+availability id dependent on 1) the namespace and 2) the type.
+
+Example:
+
+    return
+    {
+	'' =>
+	{
+	    NS_LS.'#Service' =>
+	    {
+		'connect' => [\&connect],
+		'find_node' => [\&find_node],
+	    },
+	},
+	&NS_RDF =>
+	{
+	    NS_RDFS.'Resource' =>
+	    {
+		'init_types' => [\&init_types],
+		'init_rev_subjs' => [\&init_rev_subjs],
+		'level'      => [\&base_level],
+	    },
+	},
+    };
+
+The above example says that all resoruces of type NS_LS.'#Service' has
+a connect() and a find_node() method, which is connected to the
+subroutine referenced in the referenced list.  Resources in the RDF
+namespace of type RDFS:Resource (ie, all resources) has the methods
+init_types(), init_rev_subjs() and level().
+
+=head2 init_types()
+
+Initialize TYPE and all other implicit data, except REV_TYPE,
+REV_SUBJ, REV_OBJ (and REV_PRED).  Return (1,3).
+
+=head2 init_rev_types()
+
+Initialize REV_TYPE.  Return (1,3).
+
+=head2 remove()
+
+Remove the node tom the interface.  Return (1,3).
+
+=head2 store_types()
+
+Store the type statements for $self.  Do not store those that are
+already SOLID.  Make the saved types SOLID.  Return (1,1).
+
+=head2 remove_types( $types )
+
+Remove the type statements from $self in the interface.  $types is a
+reference to a list of type contexts.  Return (1,3).
+
+=head2 store_props()
+
+Store the REV_SUBJ arcs in the interface.  Make the saved arcs SOLID.
+Return (1,1).
+
+=head2 store_node()
+
+Store the implicit arcs contained in the node.  It can be a literal or
+arc node.  The node can also have a label or other things.  Make the
+node SOLID and return (1,1).
+
+
+=head1 AUTHOR
+
+Jonas Liljegren   E<lt>jonas@paranormal.seE<gt>
+
+  http://jonas.liljegren.org/myself/en/
+
+=head1 COPYRIGHT
+
+Copyright (C) 2000-2001 Jonas Liljegren.  All Rights Reserved.
+
+This module is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.
+
+=head1 SUPPORT
+
+Comments and bug reports should go to rdf@uxn.nu.
+
+=head1 CREDITS
+
+Stefan Andersson <stefan@uxn.nu>
+
+=head1 SEE ALSO
+
+=for HTML <a href="../../../wraf.html">Wraf</a>
+
+L<RDF::Service>

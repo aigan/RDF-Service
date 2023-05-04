@@ -1,0 +1,23 @@
+[% META title = "Lodging object" %]
+
+[% lodging = s.get(cgi.param('focus')) %]
+
+<h2>[% lodging.label.li.value | html %]</h2>
+
+
+[% lodging_types = lodging.type({subClassOf = 'Lodging' }).list %]
+
+
+<table>
+[% FOREACH type = lodging_types %]
+  <tr>
+    [% TRY %]
+      <td>
+          [% type.label.li.value | html %] </td>
+    [% CATCH; CLEAR; reset %]
+      <td colspan="1">Bad value: <pre>$error.info</pre> </td>
+    [% END %]
+
+  </tr> 
+[% END %]
+</table>

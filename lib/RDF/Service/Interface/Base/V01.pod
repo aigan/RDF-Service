@@ -1,0 +1,86 @@
+#  $Id: V01.pod,v 1.1 2001/01/21 20:58:39 aigan Exp $  -*-perl-*-
+
+=head1 NAME
+
+RDF::Service::Interface::Base::V01
+
+=head1 SYNOPSIS
+
+
+=head1 PUBLIC METHODS
+
+See the C<register()> function in order to find out which methods
+applies to which namespaces and types.
+
+
+=head2 connect( $module, $args )
+
+C<$module> is the module name (for example
+L<RDF::Service::Interface::Base::V01>). $args is the connection args.
+A interface resource URI is created by combinding the $module with the
+$args to the form of a uri-escaped querystring.  $args is a hashref.
+All args are used in the resource URI except the key 'passwd' that
+should be used for authentication.
+
+=head2 create_model( $obj )
+
+Create and returns a model $obj.
+
+=head2 level()
+
+This is used to sort a list of classses such that the most specific
+class comes first and C<RDFS:Resource> comes last.  The class has the
+value of one more than the highest value of the classes this class is
+C<RDFS:subClassOf>.
+
+=head2 desig()
+
+Return a string with a good designation of the resource.  The format
+and content will depend on the resoruce type and wether a label or
+namespace is defined.  Intended for use in an administration
+interface.
+
+=head2 value()
+
+Return the value of a literal in SCALAR format.  Not a referens to a
+scalar this time.
+
+=head2 pred()
+
+Return the predicate of the arc.
+
+=head2 subj()
+
+Return the subject of the arc.
+
+=head2 obj()
+
+Return the object of the arc.
+
+
+=head1 AUTHOR
+
+Jonas Liljegren   E<lt>jonas@paranormal.seE<gt>
+
+    http://jonas.liljegren.org/myself/en/
+
+
+=head1 COPYRIGHT
+
+Copyright (C) 2000-2001 Jonas Liljegren.  All Rights Reserved.
+
+This module is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.
+
+
+=head1 ACKNOWLEDGEMENTS
+
+The RDF community, TBL and Stefan Andersson.
+
+=head1 SEE ALSO
+
+=for HTML <a href="../../wraf.html">Wraf</a>
+
+L<RDF::Service>
+
+L<RDF::Service::Interface>

@@ -1,0 +1,50 @@
+<!-- $Id: context.html,v 1.4 2001/01/21 20:58:39 aigan Exp $ -->
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "dtd/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>
+      Wraf: Context
+    </title>
+  </head>
+  <body> 
+
+    <h1><a href="wraf.html">Wraf</a>: Context</h1>
+
+    <p>The context is used as the base for a information <a href=
+      "request.html">request</a>.  It's sot of part of the request.
+      It contains your <a href="preference.html">preferences</a> used
+      to select the wanted <a href= "views.html">view</a>.</p>
+
+    <p>For the <a href="api.html"><code>RDF::Service</code> API</a>,
+      every returned object is actually a Context object containing a
+      <a href="node.html">node</a> object.  The context object holds
+      the context for the node.  All methods in the API are actually
+      context methods.</p>
+
+    <p>The context holds infromation about the <a
+      href="session.html">session</a>, and the <a href=
+      "reasoning.html" >reasoning process</a> itself.  This includes a
+      memory of what things already has been asked, in order to
+      recognize thought loops.</p>
+
+    <p>The context will complement the requests with implicit <a href=
+      "criterion.html">criterions</a>.  These criterions will come
+      from the context itself, the session and the <a href=
+      "agent.html" >agent</a> behind the session.</p>
+
+    <p>Statements in the current session context will have precedence
+      over contradiciting statements in the general preference for the
+      agent.  This will be handled using <a href="version.html"
+      >versioning</a>, saying that the session statement replaces the
+      other contradicting statements, but only for the current
+      session.</p>
+
+    <p>The <a href="trust.html">trust</a> model and the other things
+      is part of the preferences in the context.</p>
+
+    <p>Not implemented.  But we do use a context wrapper.</p>
+
+  </body>
+</html>
+

@@ -1,0 +1,40 @@
+[% META title = 'Search objects' %]
+
+[%#
+
+If we go back in the query and change it, the first version remains.
+The new options is not used.
+
+TODO: Create a new query object if we go back
+
+%]
+
+[% query = s.place_query.li %]
+
+<input type="hidden" name="focus" value="[% query.uri | html %]" />
+
+
+[% lodging_types = s.get("${NS_LD}Class/Lodging").rev_subClassOf.list %]
+[%# arc = query.arc({pred = "${NS_DAML}unionOf", 
+  #        obj = { "${NS_FORM}controlled_by" = query }}).list.0 %]
+
+
+<table>
+[% FOREACH lodging_type = lodging_types %]
+  <tr>
+    [% TRY %]
+      <td><input type="checkbox" 
+                 name="[% "a ${NS_LD}Form/lodging_type_list" | html %]" 
+                 value="[% lodging_type.uri | html %]" 
+		 [%# "checked" IF arc.obj.sel ... %]
+           /> </td>
+	<td>[%- lodging_type.label.li.value %] </td>
+    [% CATCH; CLEAR; reset %]
+      <td colspan="2">Bad value: <pre>$error.info</pre>
+    [% END %]
+
+  </tr> 
+[% END %]
+</table>
+
+<input type="button" OnClick="javascript:go('lodging_search_result','query')" value=" Search  ">

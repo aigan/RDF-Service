@@ -1,0 +1,35 @@
+<!-- $Id: container.html,v 1.3 2001/01/21 20:58:39 aigan Exp $ -->
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "dtd/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>
+      Wraf: Container
+    </title>
+  </head>
+  <body> 
+
+    <h1><a href="wraf.html">Wraf</a>: Container</h1>
+
+    <p>Internally, the contents of a <em>container</em> can be stored
+      as one or more <a href="request.html">requests</a>.  The atomic
+      parts of the container contents is <a href="interface.html"
+      >interface</a>, <a href="model.html">model</a>, resource and
+      sub-request.</p>
+
+    <p>The use of sub-requests, et al, will sometimes save a lot of
+      time and space, because wo don't have to know exactly what
+      resources are contained in the container until someone actualy
+      wants to iterate through the members or determine an exact
+      size.</p>
+
+    <p>Iteraters can be used to avoid having all the elements in
+      memory.</p>
+
+    <p>See the <a href="api.html">API</a> for examples.</p>
+
+    <p>Not implemented</p>
+
+  </body>
+</html>
+

@@ -1,0 +1,4 @@
+CookieName wraf_session
+CookieTracking on
+
+AddHandler cgi-script cgi

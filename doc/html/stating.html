@@ -1,0 +1,81 @@
+<!-- $Id: stating.html,v 1.3 2001/01/21 20:58:39 aigan Exp $ -->
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "dtd/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>
+      Wraf: Stating
+    </title>
+  </head>
+  <body> 
+
+    <h1><a href="wraf.html">Wraf</a>: Stating</h1>
+
+    <p>A <em>stating</em> is a statement existing in a <a href=
+      "model.html" >model</a>.</p>
+
+    <p>The M&S (Ch 6) says:</p>
+
+    <blockquote>The <code>Description</code> element itself represents
+      an instance of a Bag resource. The members of this Bag are the
+      resources corresponding to the reification of each of the
+      statements in the <code>Description</code>. If the
+      <code>bagID</code> attribute is specified its value is the
+      identifier of this Bag, else the Bag is anonymous.</blockquote>
+
+    <p>A document with RDF serialized as XML will have its statements
+      represented as statings in the corresponding model.  The URI of
+      the stating resource will be the same as the URI for the reified
+      statement contained in the Description bag.</p>
+
+    <h2>Normal <em>single</em> representation</h2>
+
+    <p>The stating is represented in the system by a <a href=
+      "node.html">node</a>.  The object has one node reference each
+      for a subject (SUBJ), predicate (PRED) and object (OBJ).  These
+      three slots represents the implicit statings that makes up a
+      reified statement.  They can, in the rare cases its necessary,
+      be refered to by the <a href="aliases.html">aliasing</a>
+      functionality.</p>
+
+    <p>The model of the stating is stored in the MODEL slot of the
+      node.  The same slot is used for the model of the implicit
+      statings.  But the implicit statings are <a href=
+      "inference.html" >infered</a> from the model, and does actually
+      not belong to the model.  I have not yet decided on how this
+      distinction will be handled.</p>
+
+    <h2>MULTI representation</h2>
+
+    <p>Two models can contain the same statement.  The URI of the
+      resource corresponding to the reification of the statement will
+      in most cases be unique.  URIs generated for anonymous resources
+      is guaranteed to be unique.</p>  
+
+    <p>If a URI, not within the model namespace, is explicitly given
+      to a statement by the model, it will be interpreted by Wraf as
+      refereing to a specific stating.  In this case, it is possible
+      that two models talks about the same stating but gives them
+      diffrent properties.  They may not give the statement resource
+      the same predicate, subject and object.</p>
+
+    <p>Wraf expects every stating to exist in exactly one model.  Wraf
+      will treat statings with the same URI existing in more than one
+      model as a special case.  A normal stating will internally be
+      represented in the system as a <a href="node.html">node</a>.  In
+      the special case, each implicit stating will be made
+      explicit.</p>
+
+    <h2>See also</h2>
+
+    <ul>
+
+      <li><a href="citation.html">Citations</a></li>
+
+    </ul>
+
+    <p>The MULTI representation is not implemented</p>
+
+  </body>
+</html>
+

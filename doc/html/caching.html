@@ -1,0 +1,62 @@
+<!-- $Id: caching.html,v 1.5 2001/01/21 20:58:39 aigan Exp $ -->
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "dtd/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>
+      Wraf: Caching
+    </title>
+  </head>
+  <body> 
+
+    <h1><a href="wraf.html">Wraf</a>: Caching</h1>
+
+    <p>The system will use intelligent caching and optimizations in
+      order to gain in speed without sacrifice any flexibility.  A
+      persistant backend <a href="service.html">service</a> deamon
+      will take requests from <a href="client.html">clients</a>.</p>
+
+    <p>The cache will primarly consist of <a
+      href="node.html">nodes</a>.  More data will be contained inside
+      each node.</p>  
+
+
+    <h2>Primary data</h2>
+
+    <p>The primary data consists of the original information about
+      triples, types, models, and literals.  It can't be recreated if
+      lost.  The statement, types and models data is bidirectional.
+      The objects points at its classes and the classes point at its
+      objects.  Wee keep information on whether the data has been
+      stored yet or if it doesn't have to be stored.</p>
+
+    <h2>Secondary data</h2>
+
+    <p>The secondary data is infered from primary data and can be
+      recreated if lost.  It is primarly cached <a href=
+      "selection.html" >selections</a> from <a href="request.html"
+      >requests</a>.</p>
+
+    <p>A callback will be registred in each resource (or some grouping
+      thereof) used for generating the result.  A change in a source
+      resource will exprire the selection.  If the source data can't
+      be made to expire the selection, normal expiration dates could
+      be used.</p>
+
+    <p>Cached data will have some matadata used to expire the least
+      needed data in order to save memory.</p>
+
+    <p>The key to the selection consists of it's <a href=
+      "criterion.html">criterions</a>.  This include the <a href=
+      "context.html" >context</a>.  Only the used criterions should be
+      part of the key.  The <a href="agent.html">agent</a> is part of
+      the context, but should not be part of the key, since the cached
+      selection should be used by other agents with similar <a href=
+      "preference.html">preferences</a>.</p>
+
+
+    <p>Only primary data are implemented yet.</p>
+
+  </body>
+</html>
+

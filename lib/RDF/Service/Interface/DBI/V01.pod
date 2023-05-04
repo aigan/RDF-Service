@@ -1,0 +1,43 @@
+#  $Id: V01.pod,v 1.1 2001/01/21 20:58:39 aigan Exp $  -*-perl-*-
+
+=head1 NAME
+
+RDF::Service::Interface::DBI::V01
+
+=head1 SYNOPSIS
+
+
+=head1 PUBLIC METHODS
+
+See the C<register()> function in order to find out which methods
+applies to which namespaces and types.
+
+All the mothods is the standard methods that an interface should have.
+
+
+=head1 AUTHOR
+
+Jonas Liljegren   E<lt>jonas@paranormal.seE<gt>
+
+    http://jonas.liljegren.org/myself/en/
+
+
+=head1 COPYRIGHT
+
+Copyright (C) 2000-2001 Jonas Liljegren.  All Rights Reserved.
+
+This module is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.
+
+
+=head1 ACKNOWLEDGEMENTS
+
+The RDF community, TBL and Stefan Andersson.
+
+=head1 SEE ALSO
+
+=for HTML <a href="../../wraf.html">Wraf</a>
+
+L<RDF::Service>
+
+L<RDF::Service::Interface>

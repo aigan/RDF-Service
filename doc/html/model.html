@@ -1,0 +1,75 @@
+<!-- $Id: model.html,v 1.5 2001/01/21 20:58:39 aigan Exp $ -->
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "dtd/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>
+      Wraf: Model
+    </title>
+  </head>
+  <body> 
+
+    <h1><a href="wraf.html">Wraf</a>: Model</h1>
+
+    <p>A <em>Model</em> is a <a href="container.html">container</a> of
+      statements from a specific source.  A typical model is a
+      document consisting of RDF serialized as XML.  The URI of the
+      resource representing the model should be a part of a namespace
+      controlled by the same entity as the one that created the
+      model.</p>
+
+    <p>We should consider the diffrent parts involved:</p>
+
+    <ol>
+
+      <li>The model URI</li>
+
+      <li>The URL of the remote location</li>
+
+      <li>The local copy of the model</li>
+
+      <li>The entity owning model URI namespace</li>
+
+      <li>The entity owning the URL namespace</li>
+
+      <li>The <a href="agent.html">agent</a> of the model</li>
+
+    </ol>
+
+    <p>Let's say that a <a href="service.html">service</a> has
+      imported a model to be presented for a requestor.  This means
+      that the service says that the remote location owner says that
+      the model owner says that the agent says that each of the
+      statements in the model is <a href="truth.html">true</a>.  The
+      agent is the primary <a href="stater.html">stater</a>.</p>
+
+    <p>A model can either be open or closed.  An open model can be
+      modified by the owner.  A closed model will never change.  An
+      remote open model will have a expiration date after which time
+      the source should be checked for a new version.</p>
+
+    <p>There can be several diffrent versions of the same model but
+      only one should be regarded as the correct one.  The model
+      metadata states if the model is open or closed, the time it was
+      created, the agent and other things.  The service have to
+      decide who and what to trust for giving this metadata.</p>
+
+    <p>A <a href="session.html">session</a> is a model that closes
+      then the session ends.</p>
+
+    <p>Every <a href="node.html">node</a> represents a <a href=
+      "stating.html">stating</a>.  The resource represented by the
+      node has a property <code>ls:model</code> stating which model
+      contains the statements contained in the node.</p>
+
+    <p>A model is a <code>rdfs:subClassOf rdfs:Container</code>.
+      Every member of the container is a
+      <code>rdf:Statement</code>.</p>
+
+    <p>A document with serialized RDF in XML can <a href=
+      "citation.html">cite</a> statements and include <a href=
+      "literal.html">Literals</a>.</p>
+
+  </body>
+</html>
+

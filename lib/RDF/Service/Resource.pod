@@ -1,0 +1,63 @@
+#  $Id: Resource.pod,v 1.1 2001/01/21 20:58:39 aigan Exp $  -*-perl-*-
+
+=head1 NAME
+
+RDF::Service::Resource
+
+=head1 PRIVATE METHODS
+
+=head2 new_by_id( $id )
+
+Calls C<new(undef, $id)>.
+
+=head2 new_with_ids( $ids )
+
+Calls C<new(undet, undef, $ids)>.
+
+=head2 new( $uri, $id, $ids )
+
+This is both a constructor and a clone method.
+
+Should be called with either $uri or it's corresponding $id.  $ids
+will be cloned from the calling object or taking from supplied
+argument.  An undefined $ids is only accepted under system bootstrap
+(RUNLEVEL 0).
+
+Returns a resource object. Aka C<node>.
+
+  IDS    = $ids || $proto->[IDS]
+  URI    = $uri
+  ID     = $id
+
+
+
+=head1 AUTHOR
+
+Jonas Liljegren   E<lt>jonas@paranormal.seE<gt>
+
+  http://jonas.liljegren.org/myself/en/
+
+=head1 COPYRIGHT
+
+Copyright (C) 2000-2001 Jonas Liljegren.  All Rights Reserved.
+
+This module is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.
+
+=head1 SUPPORT
+
+Comments and bug reports should go to rdf@uxn.nu.
+
+=head1 CREDITS
+
+Stefan Andersson <stefan@uxn.nu>
+
+=head1 SEE ALSO
+
+=for HTML <a href="../../../node.html">Wraf</a>
+
+=for HTML <a href="../../../context.html">Context objects</a>
+
+=for HTML <a href="../../../session.html">Sessions</a>
+
+L<RDF::Service>

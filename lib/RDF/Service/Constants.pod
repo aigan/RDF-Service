@@ -1,0 +1,609 @@
+#  $Id: Constants.pod,v 1.5 2001/04/10 13:05:24 aigan Exp $  -*-perl-*-
+
+=head1 NAME
+
+RDF::Service::Constants
+
+=head1 PUBLIC COSTANTS
+
+=head2 Namespaces
+
+  NS_RDF        => "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+  NS_RDFS       => "http://www.w3.org/2000-2001/01/rdf-schema#";
+  NS_LS         => "http://uxn.nu/rdf/2000-2001/09/19/local-schema";
+  NS_LD         => "http://uxn.nu/rdf/2000-2001/09/19/local-data";
+
+
+=head1 PRIVATE CONSTANTS
+
+=head2 Resource
+
+These are the object variables for L<RDF::Service::Resource>.  Aka
+slots.
+
+
+=over
+
+
+=item * 
+
+IDS
+
+The Interface Domain Signature
+
+=for HTML See <a href="../../../ids.html">IDS page</a>
+
+
+=item *
+
+URISTR
+
+Scalar.  Unique and always defined.
+
+
+=item *
+
+ID
+
+Integer.  Unique and always defined.
+
+
+=item *
+
+TYPE
+
+  $node->[TYPE] =
+    {
+      $type_id =>{ $model_id => $state, ... },
+      ...
+    };
+
+$type_id is ID of the class node
+
+$model_id is ID of the model containing the type statement
+
+$state == 1 : The stating exist
+
+$state == 2 : The stating exist and is solid
+
+The existing of a $type_id imples the existence of at least one model_id.
+
+The existing of a $model_id implies that the $state is either 1 or 2.
+
+
+=item *
+
+TYPE_ALL
+
+value undef: Not all types initialized
+
+value 1    : All static types initialized
+
+value 2    : All static and dynamic types initialized
+
+
+=item *
+
+TYPE_SOLID
+
+value undef: All types has not been saved
+
+value 1    : All initialized types has been saved
+
+
+=item *
+
+REV_TYPE
+
+Same as TYPE, but in the opposit direction; The classes stores all
+resources that has it as a type.  
+
+Resource and Literal are special cases, and does not use this slot.
+
+
+=item *
+
+REV_TYPE_ALL
+
+Same as TYPE_ALL, but for REV_TYPE
+
+
+=item *
+
+REV_TYPE_SOLID
+
+Same as TYPE_SOLID, but for TEV_TYPE
+
+
+=item *
+
+JUMPTABLE
+
+A reference to a jumptable, shared by other nodes with the same JTK
+
+  $node->[JUMPTABLE] =
+    {
+      function =>[ [coderef, interface_node], ... ],
+      ...
+    };
+
+JUMPTABLE depends on TYPE_ALL
+
+
+=item *
+
+DYNTABLE
+
+A reference to a jumptable, shared by other nodes with the same JTK
+
+  $node->[DYNTABLE] =
+    {
+      $predicate_uri =>[ [coderef, interface_node], ... ],
+      ...
+    };
+
+DYNTABLE depends on TYPE_ALL
+
+
+=item *
+
+PRIVATE
+
+Private space in the node to be used by individual interfaces
+
+  $self->[PRIVATE] =
+    {
+      interface_id => private_data_ref,
+      ...
+    };
+
+
+=item *
+
+MODEL
+
+The model node for the node.  See L<Nodes|..::node>.
+
+
+=item *
+
+ALIASFOR
+
+Is this resource alias for another resource?
+
+(May have to have a separate model slot for this)
+
+Not implemented
+
+
+=item *
+
+REV_PRED
+
+Reference to all statements that use this node as a predicate
+
+  $node->[REV_PRED] = [ $arc_node, ... ];
+
+
+=item *
+
+REV_PRED_ALL
+
+Same as TYPE_ALL, but for REV_PRED
+
+
+=item *
+
+REV_PRED_SOLID
+
+Sames as TYPE_SOLID, but for REV_PRED
+
+
+=item *
+
+REV_SUBJ
+
+Reference to all statements that uses this node as subject, and
+$prop_id as predicate.
+
+Same as REV_PRED, but for subjects
+
+  $node->[REV_SUBJ] =
+    {
+      $pred_id => [ $arc_node, ... ],
+      ...
+    };
+
+
+=item *
+
+REV_SUBJ_ALL
+
+Same as TYPE_ALL, but for REV_SUBJ
+
+
+=item *
+
+REV_SUBJ_PREDS
+
+  $node->[REV_SUBJ_PREDS] =
+    {
+      $pred_id => $status,
+      ...
+    };
+
+$status == 1: All static $pred_id initialized
+
+$status == 2: All static and dynamic $pred_id initialized
+
+
+=item *
+
+REV_SUBJ_I
+
+  $node->[REV_SUBJ_I] ?
+    {
+      $interface_id =>
+        {
+          'ALL' => $status,
+#          'model' => { $model_id => { $pred...
+          $pred_id => $status,
+          ...
+        },
+      ...
+    };
+
+For $pred_id in $interface_id:
+
+$status == 1: All static statements initialized
+
+No $status == 2 is used!
+
+
+=item *
+
+REV_SUBJ_SOLID
+
+Same as TYPE_SOLID, but for TEV_SUBJ
+
+
+=item *
+
+REV_OBJ
+
+Same as REV_PRED, but for objects
+
+  $self->[REV_OBJ] =
+    {
+      prop_id => [ $arc_node, ... ],
+      ...
+    };
+
+
+=item *
+
+REV_OBJ_ALL
+
+Same as TYPE_ALL, but for REV_OBJ
+
+
+=item *
+
+REV_OBJ_PREDS
+
+Same as REV_SUBJ_PREDS, but for REV_OBJ
+
+
+=item *
+
+REV_OBJ_I
+
+Same as REV_SUBJ_I, vut for REV_OBJ
+
+
+=item *
+
+JTK
+
+Jump Table Key.  Is combned from the IDS, URI-prefix ID and the list
+of types:
+
+  IDS . '/' . URI_prefix_id . '/' . join('-', type_id_orderd_list)
+
+Example:
+  C<5-8-12/9/1-4-11>
+
+C<5-8-12> is the L<IDS|..::ids>
+
+C<9> is the URI-prefix, as given by
+L<RDF::Service::Resource/find_prefix_id>
+
+C<1-4-11> is the types of the node, given by
+L<RDF::Service::Context/type_orderd_list>.
+
+This slot is only used for debugging
+
+
+=item *
+
+MULTI
+
+Is this an reified statement explicitely stored as several statements?
+
+  $self->[MULTI] = [ $arc, ... ];
+
+There are two cases.  If the PRED, SUBJ and OBJ is defined, the multi
+should only point to one of each.  If they are undefined, the arc is
+defined in multipple models.
+
+The later case is not implemented.
+
+
+=item *
+
+SOLID
+
+value 1 indicate that the node with all implicit statements is saved
+(in a interface) or doesn't have to be saved.
+
+
+=item *
+
+RUNLEVEL
+
+value 0 is used for the bootstrap process to allow partial
+initialization
+
+value 1 is the normal runlevel
+
+=back
+
+=head2 Resource li
+
+Extra slots for L<RDF::Service::Resource>, used by container entries
+
+=over
+
+=item *
+
+MEMBER
+
+Not implemented
+
+=back
+
+=head2 Resource Statement
+
+Extra slots for L<RDF::Service::Resource>, used by arcs
+
+=over
+
+=item *
+
+PRED
+
+Points at the statement predicate
+
+=item *
+
+SUBJ
+
+Points at the statement subject
+
+=item *
+
+OBJ
+
+Points at the statement object
+
+=back
+
+=head2 Resource Literal
+
+Extra slots for L<RDF::Service::Resource>, used by literals
+
+=over
+
+=item *
+
+VALUE
+
+A scalar reference
+
+=item *
+
+LANG
+
+Node reference
+
+This holds the language stating from the same model
+
+Language statings from other models is represented by arc nodes
+
+=back
+
+
+=head2 Resource Container
+
+Extra slots for L<RDF::Service::Resource>, used by containers
+
+=over
+
+=item *
+
+REV_MODEL
+
+Used by model nodes
+
+Points back at all nodes that has this node as model
+
+  $self->[REV_MODEL] =
+    {
+      node_id => node,
+      ...
+    };
+
+
+=item *
+
+SELECTION
+
+The digest content
+
+Array ref
+
+
+=item *
+
+CONTENT
+
+See L<containers|..::container>.
+
+Array ref
+
+
+=item *
+
+CONTENT_ALL
+
+
+=item *
+
+READONLY
+
+Used by model nodes
+
+Not implemented
+
+=back
+
+=head2 Resource Interface
+
+Extra slots for L<RDF::Service::Resource>, used interfaces
+
+=over
+
+=item *
+
+PREFIX
+
+Not implemented
+
+=item *
+
+MODULE_NAME
+
+The name of the interface
+
+Sort of not implemented
+
+=item *
+
+MODULE_REG
+
+This is the source material for the construction of jumptables
+
+Returned by the interfaces register() functions
+
+  $self->[MODULE_REG] =
+    {
+      domain =>
+        {
+          type =>
+            {
+              function => [ coderef, ... ],
+              ...
+            },
+          ...
+        },
+      ...
+    };
+
+=back
+
+=head2 Resource Service
+
+Extra slots for L<RDF::Service::Resource>, used by sessions
+
+=over
+
+=item *
+
+INTERFACES
+
+A list of interfaces connected to the session
+
+  $self->[INTERFACES] = [ interface_nose, ... ];
+
+=back
+
+=head2 Context
+
+Slots for L<RDF::Service::Context> objects
+
+=over
+
+=item *
+
+CONTEXT
+
+Points to node holding preferences
+
+Not implemented
+
+=item *
+
+NODE
+
+Points at the node
+
+=item *
+
+WMODEL
+
+The working model for the context
+
+New nodes created by context methods is placed in this model
+
+=item *
+
+MEMORY
+
+Same as PRIVATE, but for contexts
+
+=item *
+
+HISTORY
+
+This is a stack of dispatcher calls.  Recursive calls adds to the
+stack.  Used to catch cyclic recursive calls.  It creates keys
+consisting of the function call, object and all args.
+
+=back
+
+=head1 AUTHOR
+
+Jonas Liljegren   E<lt>jonas@paranormal.seE<gt>
+
+  http://jonas.liljegren.org/myself/en/
+
+=head1 COPYRIGHT
+
+Copyright (C) 2000-2001 Jonas Liljegren.  All Rights Reserved.
+
+This module is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.
+
+=head1 SUPPORT
+
+Comments and bug reports should go to rdf@uxn.nu.
+
+=head1 CREDITS
+
+Stefan Andersson <stefan@uxn.nu>
+
+=head1 SEE ALSO
+
+=for HTML <a href="../../../wraf.html">Wraf</a>
+
+L<RDF::Service>

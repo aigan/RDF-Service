@@ -1,0 +1,77 @@
+<!-- $Id: jumptable.html,v 1.6 2001/01/21 20:58:39 aigan Exp $ -->
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "dtd/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>
+      Wraf: Jumptables
+    </title>
+  </head>
+  <body>
+
+    <h1><a href="wraf.html">Wraf</a>: Jumptables</h1>
+
+    <p>Every <a href="interface.html">Interface</a> has a hash tree
+      that says, for each <a href="namespace.html">namespace</a> and
+      type, what methods it support.</p>
+
+    <p>Each <a href="node.html">node</a> has a customized jumptable selectd from a
+      jumpjumptable of jumptables.  The jumptable connects each method
+      name with a list of subroutine reference collected from the
+      connected interfaces.  The key used in the selection of a jumptable
+      consists of three parts:</p>
+
+    <ol>
+      <li>A orderd list of connected interfaces; <a href="ids.html">the IDS</a></li>
+      <li>A orderd list of domain prefixes</li>
+      <li>A orderd list of types</li>
+    </ol>
+
+    <p>A jumptable that doesn't exist gets created on demand.  Nodes not
+      used for method calls never needs a jumptable.</p>
+
+
+
+    <h2>Circular dependencies</h2>
+
+    <p>The jumptable depends on the list of types. But in order to
+      determine the list of types for a specific Resource, you have to
+      call <code>init_types()</code>, which will be called from the
+      jumptable.  This situation is resolved by temporary setting the
+      Resource type list to <code>RDFS:Resouce</code>.  A temporary
+      jumptable gets created and init_types gets called.  The
+      jumptable will at least know which interfaces that handles the
+      specific resource, based on its URI.  The
+      <code>init_types()</code> must be located in the
+      <code>RDFS:Resouce section</code>.  After the types has been
+      initiated, the original call will be dispatched.</p>
+    
+    <p>The internal method <code>declare_add_types()</code> (that is
+      called by the interfaces implementations of
+      <code>init_types()</code>) will need to call
+      <code>init_props()</code> (that initialize all the nodes
+      properties) for each class in order to find
+      <code>subClassOf</code> properties.  That will lead to infinite
+      recursions for some top classes.  <code>RDFS:Resource</code>
+      never gets a chanse to define it's types since
+      <code>init_types()</code> calls <code>init_props()</code> for
+      itself.  this has been resolved by skipping the
+      <code>subClassOf</code> calls for <code>RDFS:Literal</code>,
+      <code>RDFS:Resource</code> and <code>RDF:Statement</code>; ie
+      all the types of nodes that are created by the
+      <code>init_props()</code> process.  (I not yet fully understands
+      what happens here.)</p>
+
+<hr />
+
+
+All context/client-dependent functions should use the session
+object methods or send it in as a parameter. This construction
+is a compromise to shorten the method calls in most cases, so
+that we doesn't have to tag along the context varaible evrywhere
+and so that we still can reuse the cached resource objects
+between more than one session.
+
+
+  </body>
+</html>

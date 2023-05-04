@@ -1,0 +1,17 @@
+
+<input type=hidden name=handler value="$template.next_handler">
+<input type=hidden name=previous value="$handler">
+<input type=hidden name=action value="">
+</form>
+
+<p>
+ | <a href="javascript:go('main')">Main</a>
+ | <a href="javascript:go('search')">Search objects</a>
+ | <a href="javascript:go('new')">Create object</a>
+ | <a href="javascript:go('main','initiate_db')">Initiate DB</a>
+</p>
+
+
+<p><em>Session [% s.uri %]</em></p>
+
+</body></html>

@@ -1,0 +1,89 @@
+[% META title = "Person" %]
+
+[%
+	person = s.get(cgi.param('focus')) 
+
+	# Schema:
+	#	first_name	Given name
+	#	last_name	Family name
+	#	email_address	E-mail address
+	#	icq_number	ICQ number
+	#	comment		Comments
+%]
+
+<input type="hidden" name="focus" value="[%
+person.uri | html %]" />
+
+<center>
+<table width="80%" border="1">
+<tr>
+
+<td>First name</td>
+<td><input 
+	name="res-lit [% person.fn.li.uri %]" 
+	value="[% person.fn.li.value %]"
+	/>
+</td>
+
+<td rowspan="2">E-mail</td>
+<td rowspan="2">
+[% FOREACH myemail = person.email.list %]
+<input 
+	name="res-lit [% myemail.uri %]" 
+	value="[% myemail.value %]"
+/>
+<BR>
+[% END %]
+
+<input name="pred-lit [% "${NS_LD}Person/email_address" %]" />
+</td>
+
+</tr>
+
+<tr>
+<td>Last name</td>
+<td><input 
+	name="res-lit [% person.ln.li.uri %]" 
+	value="[% person.ln.li.value %]"
+	/>
+</td>
+</tr>
+
+<tr>
+<td>ICQ</td>
+<td>
+[% IF person.icq.list.0 %]
+<input 
+	name="res-lit [% person.icq.li.uri %]" 
+	value="[% person.icq.li.value %]"
+	/>
+[% ELSE %]
+<input name="pred-lit [% "${NS_LD}Person/icq_number" %]" />
+[% END %]
+</td>
+
+<td colspan=2 align="right">
+<input type="button" OnClick="javascript:go('details','state')"
+       value="Update" />
+</td></tr>
+</table>
+<BR />
+<table width="80%">
+<tr>
+<td>Class</td><td>
+
+[% FOREACH c = person.type.list %]
+<A HREF="$me?handler=class&focus=[%- c.uri %]">[%
+c.label.li.value %]</A>
+[% END %]
+
+</td>
+<td>Dump</td><td>
+
+<A HREF="$me?handler=class&focus=[%- person.uri %]">Arc dump</A>
+
+</td>
+</tr>
+</table>
+
+</center>

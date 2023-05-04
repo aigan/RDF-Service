@@ -1,0 +1,56 @@
+<!-- $Id: citation.html,v 1.5 2001/01/21 20:58:39 aigan Exp $ -->
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "dtd/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>
+      Wraf: Citation
+    </title>
+  </head>
+  <body> 
+
+    <h1><a href="wraf.html">Wraf</a>: Citation</h1>
+
+    <p>Each statement in a <a href="model.html">model</a> has a
+      corresponding resource representing the reified statement.
+      These are the statements regarded as facts by the model <a
+      href="agent.html">agent</a>.  A <em>spelled out</em> reified
+      statement is not regarded as a fact, and is called a
+      <em>citation</em>.</p>
+
+    <p>Citations are <a href="stating.html">statings</a>, even if the
+      model or agent of the stating is unknown.</p>  
+
+    <p>If the URI of the stating is specified, it could be the URI of
+      a resource actually stated in another model.  In this case, the
+      origin is known and the properties of the stating (the
+      predicate, subject, object, etc) could be left out.</p>
+
+    <p>In the common case, the original URI of the stating cited is
+      unknown.  In this case, the stating will be placed in a special
+      model created only for citations contained in the specific
+      model.</p>
+
+    <p>The cited stating can be traced back to the model in which it
+      was cited by the four reification statings that
+      <strong>do</strong> belong to that model.  We may avoid creating
+      a separate <a href="node.html">node</a> for each of the four
+      statings of the reification, in order to save space.  The origin
+      of the citation could be known by metadata for the special
+      citation model.  The model could have a <code>quotedIn</code>
+      property.  A FACT slot (for the node) will <strong>not</strong>
+      be used.</p>
+
+    <p>A citation could, instead or in addition to the correct stating
+      URI, include enough data to <a href="inference.html">infere</a>
+      which stating is cited.  This could for example be done by
+      adding the <code>ls:model</code> property.  The citation can
+      then be coupled to the original stating by use of <a href=
+      "aliases.html">aliasing</a>.  The alias statement will be placed
+      in a model according to the inference.</p>
+
+    <p>Not implemented</p>
+
+  </body>
+</html>
+

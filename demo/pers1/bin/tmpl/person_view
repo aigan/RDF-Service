@@ -1,0 +1,43 @@
+[% META title = 'Persons' %]
+
+[% person = s.get(cgi.param('r_person')) %]
+
+<h2>
+  [% TRY %]
+    [% person.fn.li.value %]
+    [% person.ln.li.value %]
+  [% CATCH; CLEAR; reset %] A person without a name
+  [% END %]
+</h2>
+
+<dl>
+[% FOREACH pred = person.arc_pred.list %]
+  <dt>[% pred.desig %]</dt>
+  <dd>
+    <ol>
+    [% FOREACH arc = person.arc(pred).list %]
+      <li>$arc.obj.desig
+	<ul>
+	  <li>
+                  [% TRY %]
+                     Date: [% arc.model.updated.li.value %]
+                  [% CATCH; CLEAR; reset %]
+                     No date for model: $error.info
+                  [% END %]
+          </li>
+	  <li>Agent: 
+            [% TRY %]
+              [% agent = arc.model.agent.li %]
+              [% agent.fn.li.value %]
+              [% agent.ln.li.value %]
+            [% CATCH; CLEAR; reset %]
+              Unknown: $error.info
+            [% END %]
+          </li>
+        </ul>
+      </li>
+    [% END %]
+    </ol>
+  </dd>
+[% END %]
+</dl>
